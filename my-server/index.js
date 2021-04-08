@@ -1,10 +1,9 @@
 const express = require('express');
 const app = express();
-/*const routes = require('./routes');
+const routers = require('./routers/index');
 
-app.use('/', routes); */
+app.use('/julia', routers); 
 
-
-app.listen(3001, function () {
+app.listen(3001, function (error) {
   console.log('Example app listening on port 3001!');
 });
