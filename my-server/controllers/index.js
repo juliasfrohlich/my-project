@@ -1,8 +1,7 @@
 
-const julia = (req) => {
+function julia () {
     return 'Hello World!'
 }
-
 
 
 export default julia
