@@ -1,6 +1,8 @@
 import express from 'express';
 import routers from './routers/index';
 import mongoose from 'mongoose';
+import dogs from './routers/dogs';
+import bodyParser from 'body-parser';
 
 mongoose.connect('mongodb://localhost:27017/julia', {useNewUrlParser: true, useUnifiedTopology: true});
 
@@ -13,7 +15,9 @@ db.once('open', function () {
 
 const app = express();
 
-app.use('/julia', routers); 
+app.use(bodyParser.json({ limit: '100mb' }));
+app.use('/', dogs); 
+
 
 app.listen(3001, function (error) {
   console.log('Example app listening on port 3001!');
