@@ -4,7 +4,7 @@ import mongoose from 'mongoose';
 import dogs from './routers/dogs';
 import bodyParser from 'body-parser';
 
-mongoose.connect('mongodb://localhost:27017/julia', {useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.connect('mongodb://127.0.0.1:27017/Dogs', {useNewUrlParser: true, useUnifiedTopology: true});
 
 const db = mongoose.connection
 
