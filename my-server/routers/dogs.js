@@ -1,5 +1,5 @@
-import {Router} from 'express';
-import {deleteDogByName, getDogs, insertDog} from '../controllers/dogs';
+const {Router} = require('express');
+const {deleteDogByName, getDogs, insertDog} = require('../controllers/dogs');
 
 const router = Router()
 
@@ -21,4 +21,4 @@ router.delete('/dog', async (req,res) => {
 })
     
 
-export default router
+module.exports = router

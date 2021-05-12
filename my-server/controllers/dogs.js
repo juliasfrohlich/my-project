@@ -1,6 +1,6 @@
-import Dogs from '../models/Dogs';
+const Dogs = require('../models/Dogs');
 
-export async function getDogs ( ) {
+module.exports = { getDogs: async function getDogs ( ) {
   try {
 
     const dogs = await Dogs.find()
@@ -9,9 +9,9 @@ export async function getDogs ( ) {
   } catch (err) {
     return err
   }
-}
+}}
 
-export async function insertDog (req, res) {
+module.exports = { insertDog: async function insertDog (req, res) {
   try {
     
     const createDog = await Dogs.create(req.body)
@@ -20,13 +20,13 @@ export async function insertDog (req, res) {
   } catch (err) {
     return err
   }
-}
+}}
 
-export async function deleteDogByName (name) {
+module.exports = { deleteDogByName: async function deleteDogByName (name) {
   try {
     const deleteDog = await Dogs.deleteOne({name: name})
     return deleteDog
   } catch (err) {
 
   }
-}
+}}

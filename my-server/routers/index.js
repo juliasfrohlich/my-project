@@ -1,5 +1,5 @@
-import {Router} from 'express';
-import julia from '../controllers';
+const {Router} = require('express');
+const julia = require('../controllers');
 
 const router = Router()
 
@@ -10,4 +10,4 @@ router.get('/', (req, res) => {
 })
     
 
-export default router
+module.exports = router
