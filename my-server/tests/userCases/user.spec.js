@@ -5,10 +5,10 @@ describe('Entidade: User', () => {
   describe('Caso de uso: Criar um usuário', () => {
     
     const userExample = {
-      Nome: 'Julia',
+      Name: 'Julia',
       Email: 'juliasfrohlich@hotmail.com',
-      Senha: '123',
-      Papel: 'Dev',
+      Password: '123',
+      Attribution: 'Dev',
       Status: 'Ativa' ,
     }
 

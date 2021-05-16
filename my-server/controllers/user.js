@@ -32,7 +32,7 @@ exports.updatedUser = async function updateUser (id, payload) {
   }
 }
 
-exports.deleteUserByName =async function deleteUserByName (name) {
+exports.deleteUserByName = async function deleteUserByName (name) {
   try {
      const deletedUser = await model.deleteOne({name: name})
      return ['ok', deletedUser];
