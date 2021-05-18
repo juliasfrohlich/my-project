@@ -1,6 +1,15 @@
-exports.getUsers = async function getUsers ( ) {
+exports.getUsers = async function getUsers (model ) {
    try {
+
+    if (model.find === undefined){
+      throw new Error("O modelo passado não possui o método find()")
+    }
      const users = await model.find()
+
+     if (users instanceof Error) {
+      throw new Error(users)
+    }
+
      return ['ok', users]
 
    } catch (err) {
@@ -8,15 +17,25 @@ exports.getUsers = async function getUsers ( ) {
    }
 }
 
-exports.insertUser = async function insertUser (user, model, error) {
+exports.insertUser = async function insertUser (user = {}, model = {}, error = null) {
   try {
-    console.log("erro no insertUser", insertUser)
+
+    if (model.create === undefined){
+      throw new Error("O modelo passado não possui o método create()")
+    }
+
+    if (!Object.keys(user).length){
+      throw new Error("Erro ao criar usuário: Dados insuficientes.")
+    }
     const createdUser = await model.create(user, error)
-    console.log('created user: ', createdUser)
+    
+    if (createdUser instanceof Error) {
+      throw new Error(createdUser)
+    }
     return ['ok', createdUser];
+    
 
   } catch (err) {
-    console.log('fui capturado no controller')
 
       return ['error', err]
   }
@@ -25,6 +44,11 @@ exports.insertUser = async function insertUser (user, model, error) {
 exports.updatedUser = async function updateUser (id, payload) {
   try {
     const updatedUser = await model.updateOne({_id: id}, payload)
+
+    if (updatedUser instanceof Error) {
+      throw new Error(updatedUser)
+    }
+
     return ['ok', updatedUser];
 
   } catch (err) {
@@ -35,6 +59,11 @@ exports.updatedUser = async function updateUser (id, payload) {
 exports.deleteUserByName = async function deleteUserByName (name) {
   try {
      const deletedUser = await model.deleteOne({name: name})
+
+     if (deletedUser instanceof Error) {
+      throw new Error(deletedUser)
+    }
+
      return ['ok', deletedUser];
 
    } catch (err) {
