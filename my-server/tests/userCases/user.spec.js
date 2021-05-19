@@ -59,7 +59,6 @@ describe('Entidade: User', () => {
     test('Deve atualizar um dado do usuário e retornar as propriedades atualizadas do usuário especificado', async () => {
       const payload = {name: 'Julião'} 
       const response = await updatedUser('123', payload, UserModelMock)
-      console.log('response: ', response)
       expect(response[0]).toBe('ok')
       expect(response[1][0].name).toBe(payload.name)
     })

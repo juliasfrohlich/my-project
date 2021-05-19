@@ -75,7 +75,6 @@ describe('Entidade: Restaurant', () => {
   describe('Caso de uso: Listar restaurantes', () => {
     test('Deve retornar os restaurantes cadastrados e suas propriedades', async () => {  
       const response = await getRestaurants(RestaurantModelMock)
-      console.log('response: ', response)
       expect(response[0]).toBe('ok')
       expect(response[1]).toHaveProperty('length')
     })

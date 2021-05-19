@@ -5,16 +5,18 @@ class userModelMock {
   constructor (){
     this.userDataMock = new UserDataMock()
   }
-  async create (user = {}, error = null) {
+  async create ( user = {}, error = null ) {
     try {
       if (error) {
         throw new Error(error)
-      } else if (user === {}){
+
+      } else if ( user === {} ){
         throw new Error('As informações são insuficientes para criar um usuário.')
+
       } else {
-        return new Promise((resolve) => {
-          resolve([user])
-        })
+          return new Promise(( resolve ) => {
+            resolve([ user ])
+          })
       }
 
     } catch (err) {
@@ -22,14 +24,15 @@ class userModelMock {
     }
   }
 
-  async find (error = null) {
+  async find ( error = null ) {
     try {
-      if (error) {
+      if ( error ) {
         throw new Error(error)
+
       } else {
-        return new Promise((resolve) => {
-          resolve(this.userDataMock.getData())
-        })
+          return new Promise(( resolve ) => {
+            resolve(this.userDataMock.getData())
+          })
       }
       
     } catch (err) {
@@ -37,10 +40,11 @@ class userModelMock {
     }
   }
   
-  async updateOne (id = '', dataToUpdate = {}, error = null) {
+  async updateOne ( id = '', dataToUpdate = {}, error = null ) {
     try {
-      if (error) {
+      if ( error ) {
         throw new Error(error)
+
       } else {
         const fieldToUpdate = Object.keys(dataToUpdate)[0]
         const users = this.userDataMock.getData()
@@ -48,8 +52,8 @@ class userModelMock {
 
         let updatedUser = userToUpdate[0]
         updatedUser[fieldToUpdate] = dataToUpdate[fieldToUpdate]
-        return new Promise((resolve) => {
-          resolve([updatedUser])
+        return new Promise(( resolve ) => {
+          resolve([ updatedUser ])
         })
       }
 
@@ -58,16 +62,17 @@ class userModelMock {
     }
   }
 
-  async deleteOne (name = null, error = null) {
+  async deleteOne ( name = null, error = null ) {
     try {
-      if (error) {
+      if ( error ) {
         throw new Error(error)
+
       } else {
-        const users = this.userDataMock.getData()
-        const deletedUser = users.filter(user => user.name === name)
-        return new Promise((resolve) => {
-          resolve(deletedUser)
-        })
+          const users = this.userDataMock.getData()
+          const deletedUser = users.filter( user => user.name === name )
+          return new Promise((resolve) => {
+            resolve( deletedUser )
+          })
       }
 
     } catch (err) {

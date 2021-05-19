@@ -1,16 +1,30 @@
-exports.getProcesses = async function getProcesses ( ) {
+exports.getProcesses = async function getProcesses ( model = {} ) {
   try {
-    const processes = await model.find()
-    return ['ok', processes]
+
+    if ( model.find === undefined ){
+      throw new Error("O modelo passado não possui o método find()")
+    }
+
+    const pollingProcesses = await model.find()
+
+    if ( pollingProcesses instanceof Error ) {
+      throw new Error(pollingProcesses)
+    }
+
+    return ['ok', pollingProcesses]
 
   } catch (err) {
      return ['error', err]
   }
 }
 
-exports.insertProcess = async function insertProcess (process, model, error) {
+exports.insertProcess = async function insertProcess ( process = {}, model = {}, error = null ) {
  try {
-   const createdProcess = await model.create(process, error)
+    if ( model.create === undefined ){
+      throw new Error("O modelo passado não possui o método updateOne()")
+    }
+   const createdProcess = await model.create( process, error )
+
    return ['ok', createdProcess];
 
  } catch (err) {
@@ -19,9 +33,17 @@ exports.insertProcess = async function insertProcess (process, model, error) {
  }
 }
 
-exports.updatedProcess = async function updateProcess (id, payload) {
+exports.updatedProcess = async function updatedProcess ( id = '', payload = {}, model = {}, error = null ) {
  try {
-   const updatedProcess = await model.updateOne({_id: id}, payload)
+    if ( model.updateOne === undefined ){
+      throw new Error("O modelo passado não possui o método updateOne()")
+    }
+   const updatedProcess = await model.updateOne( id, payload )
+
+   if ( updatedProcess instanceof Error ) {
+    throw new Error(updatedProcess)
+  }
+
    return ['ok', updatedProcess];
 
  } catch (err) {
@@ -29,9 +51,18 @@ exports.updatedProcess = async function updateProcess (id, payload) {
  }
 }
 
-exports.deleteProcessByName = async function deleteProcessByName (name) {
+exports.deleteProcessById = async function deleteProcessById ( id = '', model = {}, error = null ) {
  try {
-    const deletedProcess = await model.deleteOne({name: name})
+    if ( model.deleteOne === undefined ){
+      throw new Error("O modelo passado não possui o método deleteOne()")
+    }
+
+    const deletedProcess = await model.deleteOne( id )
+
+    if ( deletedProcess instanceof Error ) {
+      throw new Error(deletedProcess)
+    }
+
     return ['ok', deletedProcess];
 
   } catch (err) {

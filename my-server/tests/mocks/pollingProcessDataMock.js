@@ -2,34 +2,37 @@ class PollingProcessDataMock {
   constructor () {
     this.data = [
                 {
-                  Voters: 'Julia, Yumi, Ryu',
-                  Limit: '1',
-                  Restaurants: 'Risotinho, Camarones, Nona Pizzera',
-                  Date: '05/05/2021',
-                  Week: '1',
-                  Votes: '3',
-                  RestaurantWinner: 'Risotinho',
-                  Status: 'Encerrado'
+                  _id: '123',
+                  voters: 'Julia, Yumi, Ryu',
+                  limit: '1',
+                  restaurants: 'Risotinho, Camarones, Nona Pizzera',
+                  date: '05/05/2021',
+                  week: '1',
+                  votes: '3',
+                  restaurantWinner: 'Risotinho',
+                  status: 'Encerrado'
                 },
                 {
-                  Votes: 'Julia, Yumi, Ryu',
-                  Limit: '1',
-                  Restaurants: 'Camarones, Nona Pizzera',
-                  Date: '11/05/2021',
-                  Week: '2',
-                  Votes: '3',
-                  RestaurantWinner: 'Nona Pizzera',
-                  Status: 'Encerrado'
+                  _id: '258',
+                  voters: 'Julia, Yumi, Ryu',
+                  limit: '1',
+                  restaurants: 'Camarones, Nona Pizzera',
+                  date: '11/05/2021',
+                  week: '2',
+                  votes: '3',
+                  restaurantWinner: 'Nona Pizzera',
+                  status: 'Encerrado'
                 },
                 {
-                  Votes: 'Julia, Yumi, Ryu',
-                  Limit: '1',
-                  Restaurants: 'Nona Pizzera',
-                  Date: '20/05/2021',
-                  Week: '3',
-                  Votes: '3',
-                  RestaurantWinner: '',
-                  Status: 'Em andamento'
+                  _id: '369',
+                  voters: 'Julia, Yumi, Ryu',
+                  limit: '1',
+                  restaurants: 'Nona Pizzera',
+                  date: '20/05/2021',
+                  week: '3',
+                  votes: '3',
+                  restaurantWinner: '',
+                  status: 'Em andamento'
                 },
               ]
 }

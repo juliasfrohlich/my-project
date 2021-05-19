@@ -39,7 +39,6 @@ class restaurantModelMock {
   async updateOne (id = '', dataToUpdate = {}, error = null) {
     try {
       if (error) {
-        console.log('error: ', error)
         throw new Error(error)
       } else {
           const fieldToUpdate = Object.keys(dataToUpdate)[0]
@@ -64,9 +63,7 @@ class restaurantModelMock {
         throw new Error(error)
       } else {
         const restaurants = this.restaurantDataMock.getData()
-        console.log('restaurants: ', restaurants)
         const deletedRestaurant = restaurants.filter(restaurants => restaurants.name === name)
-        console.log('deletedRestaurant: ', deletedRestaurant)
 
         return new Promise((resolve) => {
           resolve(deletedRestaurant)

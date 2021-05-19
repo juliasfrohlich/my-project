@@ -1,13 +1,13 @@
-exports.getRestaurants = async function getRestaurants (model = {} ) {
+exports.getRestaurants = async function getRestaurants ( model = {} ) {
   try {
 
-    if (model.find === undefined){
+    if ( model.find === undefined ){
       throw new Error("O modelo passado não possui o método find()")
     }
 
     const restaurants = await model.find()
 
-    if (restaurants instanceof Error) {
+    if ( restaurants instanceof Error ) {
       throw new Error(restaurants)
     }
 
@@ -18,12 +18,15 @@ exports.getRestaurants = async function getRestaurants (model = {} ) {
   }
 }
 
-exports.insertRestaurant = async function insertRestaurant (restaurant = {}, model = {}, error = null) {
+exports.insertRestaurant = async function insertRestaurant ( restaurant = {}, model = {}, error = null ) {
  try {
-    if (model.create === undefined){
+
+    if ( model.create === undefined ){
       throw new Error("O modelo passado não possui o método updateOne()")
     }
-   const createdRestaurant = await model.create(restaurant, error)
+
+   const createdRestaurant = await model.create( restaurant, error )
+
    return ['ok', createdRestaurant];
 
  } catch (err) {
@@ -32,14 +35,14 @@ exports.insertRestaurant = async function insertRestaurant (restaurant = {}, mod
  }
 }
 
-exports.updatedRestaurant = async function updateRestaurant (id = '', payload = {}, model = {}, error = null) {
+exports.updatedRestaurant = async function updateRestaurant ( id = '', payload = {}, model = {}, error = null ) {
  try {
-    if (model.updateOne === undefined){
+    if ( model.updateOne === undefined ){
       throw new Error("O modelo passado não possui o método updateOne()")
     }
-   const updatedRestaurant = await model.updateOne( id, payload)
+   const updatedRestaurant = await model.updateOne( id, payload )
 
-   if (updatedRestaurant instanceof Error) {
+   if ( updatedRestaurant instanceof Error ) {
     throw new Error(updatedRestaurant)
   }
 
@@ -50,15 +53,17 @@ exports.updatedRestaurant = async function updateRestaurant (id = '', payload = 
  }
 }
 
-exports.deleteRestaurantByName = async function deleteRestaurantByName (name = null, model = {}, error = null) {
+exports.deleteRestaurantByName = async function deleteRestaurantByName ( name = null, model = {}, error = null ) {
  try {
-    if (model.deleteOne === undefined){
+
+    if ( model.deleteOne === undefined ){
       throw new Error("O modelo passado não possui o método deleteOne()")
     }
-    const deletedRestaurant = await model.deleteOne(name)
-    console.log('deletedRestaurant: ', deletedRestaurant)
-    if (deletedRestaurant instanceof Error) {
-      throw new Error(deletedRestaurant)
+
+    const deletedRestaurant = await model.deleteOne( name )
+
+    if ( deletedRestaurant instanceof Error ) {
+      throw new Error( deletedRestaurant )
     }
 
     return ['ok', deletedRestaurant];

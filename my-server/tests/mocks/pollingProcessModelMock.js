@@ -1,20 +1,21 @@
-const PollingProcessMock = require('./pollingProcesssDataMock')
-
+const PollingProcessDataMock = require('./pollingProcessDataMock')
 
 class pollingProcessModelMock {
   constructor (){
-    this.pollingProcessMock = new PollingProcessMock()
+    this.pollingProcessDataMock = new PollingProcessDataMock()
   }
-  async create (pollingProcess = {}, error = null) {
+  async create ( pollingProcess = {}, error = null ) {
     try {
-      if (error) {
+      if ( error ) {
         throw new Error(error)
-      } else if (pollingProcess === {}){
-        throw new Error('As informações são insuficientes para criar um usuário.')
+
+      } else if ( pollingProcess === {} ){
+          throw new Error('As informações são insuficientes para criar um usuário.')
+
       } else {
-        return new Promise((resolve) => {
-          resolve(pollingProcess)
-        })
+          return new Promise(( resolve ) => {
+            resolve([ pollingProcess ])
+          })
       }
 
     } catch (err) {
@@ -22,14 +23,15 @@ class pollingProcessModelMock {
     }
   }
 
-  async find (error = null) {
+  async find ( error = null ) {
     try {
-      if (error) {
+      if ( error ) {
         throw new Error(error)
+
       } else {
-        return new Promise((resolve) => {
-          resolve(this.pollingProcessMock.getData())
-        })
+          return new Promise(( resolve ) => {
+            resolve(this.pollingProcessDataMock.getData())
+          })
       }
       
     } catch (err) {
@@ -37,30 +39,39 @@ class pollingProcessModelMock {
     }
   }
   
-  async updateOne (pollingProcess = {}, error = null) {
+  async updateOne ( id = '', dataToUpdate = {}, error = null ) {
     try {
-      if (error) {
-        console.log('error: ', error)
+      if ( error ) {
         throw new Error(error)
+
       } else {
-        return new Promise((resolve) => {
-          resolve(pollingProcess)
-        })
-      }
+          const fieldToUpdate = Object.keys(dataToUpdate)[0]
+          const pollingProcesss = this.pollingProcessDataMock.getData()
+          const pollingProcessToUpdate = pollingProcesss.filter( pollingProcesss => pollingProcesss._id === id )
+
+          let updatedPollingProcess = pollingProcessToUpdate[0]
+          updatedPollingProcess[fieldToUpdate] = dataToUpdate[fieldToUpdate]
+          return new Promise(( resolve ) => {
+            resolve([updatedPollingProcess])
+          })
+        }
 
     } catch (err) {
         return err
     }
   }
 
-  async deleteOne (pollingProcess = {}, error = null) {
+  async deleteOne ( id = '', error = null ) {
     try {
-      if (error) {
+      if ( error ) {
         throw new Error(error)
       } else {
-        return new Promise((resolve) => {
-          resolve(pollingProcess)
-        })
+          const pollingProcesss = this.pollingProcessDataMock.getData()
+          const deletedPollingProcess = pollingProcesss.filter(pollingProcesss => pollingProcesss._id === id)
+
+          return new Promise(( resolve ) => {
+            resolve( deletedPollingProcess )
+          })
       }
 
     } catch (err) {
