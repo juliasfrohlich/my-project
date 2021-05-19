@@ -41,7 +41,7 @@ exports.insertUser = async function insertUser (user = {}, model = {}, error = n
   }
 }
 
-exports.updatedUser = async function updateUser (id = null, payload = {}, model = {}, error = null) {
+exports.updatedUser = async function updateUser (id = '', payload = {}, model = {}, error = null) {
   try {
 
     if (model.updateOne === undefined){
@@ -67,7 +67,7 @@ exports.deleteUserByName = async function deleteUserByName (name = null, model =
       throw new Error("O modelo passado não possui o método deleteOne()")
     }
 
-    const deletedUser = await model.deleteOne({name: name})
+    const deletedUser = await model.deleteOne(name)
 
      if (deletedUser instanceof Error) {
       throw new Error(deletedUser)

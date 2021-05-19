@@ -13,7 +13,7 @@ class userModelMock {
         throw new Error('As informações são insuficientes para criar um usuário.')
       } else {
         return new Promise((resolve) => {
-          resolve(user)
+          resolve([user])
         })
       }
 
@@ -37,14 +37,21 @@ class userModelMock {
     }
   }
   
-  async updateOne (user = {}, error = null) {
+  async updateOne (id = '', dataToUpdate = {}, error = null) {
     try {
       if (error) {
         console.log('error: ', error)
         throw new Error(error)
       } else {
+        const fieldToUpdate = Object.keys(dataToUpdate)[0]
+        console.log('dataToUpdate', dataToUpdate)
+        const users = this.userDataMock.getData()
+        const userToUpdate = users.filter(user => user._id === id)
+
+        let updatedUser = userToUpdate[0]
+        updatedUser[fieldToUpdate] = dataToUpdate[fieldToUpdate]
         return new Promise((resolve) => {
-          resolve(user)
+          resolve([updatedUser])
         })
       }
 
@@ -53,13 +60,15 @@ class userModelMock {
     }
   }
 
-  async deleteOne (user = {}, error = null) {
+  async deleteOne (name = null, error = null) {
     try {
       if (error) {
         throw new Error(error)
       } else {
+        const users = this.userDataMock.getData()
+        const deletedUser = users.filter(user => user.name === name)
         return new Promise((resolve) => {
-          resolve(user)
+          resolve(deletedUser)
         })
       }
 

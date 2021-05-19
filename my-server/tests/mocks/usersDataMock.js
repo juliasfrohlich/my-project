@@ -2,28 +2,28 @@ class UserDataMock {
   constructor () {
     this.data = [
                 {
-                  _Id: '123',
-                  Name: 'Julia',
-                  Email: 'juliasfrohlich@hotmail.com',
-                  Password: '123',
-                  Attribution: 'Dev',
-                  Status: 'Ativa' ,
+                  _id: '123',
+                  name: 'Julia',
+                  email: 'juliasfrohlich@hotmail.com',
+                  password: '123',
+                  attribution: 'Dev',
+                  status: 'Ativa' ,
                 },
                 {
-                  _Id: '345',
-                  Name: 'Yumi',
-                  Email: 'yumicadela18@hotmail.com',
-                  Password: '123',
-                  Attribution: 'Tester',
-                  Status: 'Ativa' ,
+                  _id: '345',
+                  name: 'Yumi',
+                  email: 'yumicadela18@hotmail.com',
+                  password: '123',
+                  attribution: 'Tester',
+                  status: 'Ativa' ,
                 },
                 {
-                  _Id: '357',
-                  Name: 'Ryu',
-                  Email: 'ryu@gmail.com',
-                  Password: '123',
-                  Attribution: 'Fighter',
-                  Status: 'Ativa' ,
+                  _id: '357',
+                  name: 'Ryu',
+                  email: 'ryu@gmail.com',
+                  password: '123',
+                  attribution: 'Fighter',
+                  status: 'Ativa' ,
                 }
               ]
 }
