@@ -1,5 +1,4 @@
 const {insertUser, getUsers, updatedUser, deleteUserByName} = require('../../controllers/user');
-const userModelMock = require('../mocks/userModelMock');
 const UserModelMock = require('../mocks/userModelMock')
 
 describe('Entidade: User', () => {
@@ -45,7 +44,7 @@ describe('Entidade: User', () => {
       expect(response[1][0].name).toBe(name)
     })
     test('Deve retornar um status "erro" e a mensagem de erro caso não haja usuário com o nome especificado no banco de dados', async () => {  
-      const response = await deleteUserByName(userModelMock)
+      const response = await deleteUserByName(UserModelMock)
       expect(response[0]).toBe('error')
       expect(response[1]).toBeInstanceOf(Error)
     })
@@ -65,7 +64,7 @@ describe('Entidade: User', () => {
       expect(response[1][0].name).toBe(payload.name)
     })
     test('Deve retornar um status "erro" e a mensagem de erro caso não haja usuário com o ID especificado no banco de dados', async () => {  
-      const response = await updatedUser({}, userModelMock)
+      const response = await updatedUser({}, UserModelMock)
       expect(response[0]).toBe('error')
       expect(response[1]).toBeInstanceOf(Error)
     })

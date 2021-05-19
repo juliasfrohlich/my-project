@@ -40,11 +40,9 @@ class userModelMock {
   async updateOne (id = '', dataToUpdate = {}, error = null) {
     try {
       if (error) {
-        console.log('error: ', error)
         throw new Error(error)
       } else {
         const fieldToUpdate = Object.keys(dataToUpdate)[0]
-        console.log('dataToUpdate', dataToUpdate)
         const users = this.userDataMock.getData()
         const userToUpdate = users.filter(user => user._id === id)
 

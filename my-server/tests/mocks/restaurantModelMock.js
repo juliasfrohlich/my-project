@@ -2,7 +2,7 @@ const RestaurantDataMock = require('./restaurantDataMock')
 
 class restaurantModelMock {
   constructor (){
-    this.RestaurantDataMock = new RestaurantDataMock()
+    this.restaurantDataMock = new RestaurantDataMock()
   }
   async create (restaurant = {}, error = null) {
     try {
@@ -12,7 +12,7 @@ class restaurantModelMock {
         throw new Error('As informações são insuficientes para criar um usuário.')
       } else {
         return new Promise((resolve) => {
-          resolve(restaurant)
+          resolve([restaurant])
         })
       }
 
@@ -36,29 +36,40 @@ class restaurantModelMock {
     }
   }
   
-  async updateOne (restaurant = {}, error = null) {
+  async updateOne (id = '', dataToUpdate = {}, error = null) {
     try {
       if (error) {
         console.log('error: ', error)
         throw new Error(error)
       } else {
-        return new Promise((resolve) => {
-          resolve(restaurant)
-        })
-      }
+          const fieldToUpdate = Object.keys(dataToUpdate)[0]
+          const restaurants = this.restaurantDataMock.getData()
+          const restaurantToUpdate = restaurants.filter(restaurants => restaurants._id === id)
+
+          let updatedRestaurant = restaurantToUpdate[0]
+          updatedRestaurant[fieldToUpdate] = dataToUpdate[fieldToUpdate]
+          return new Promise((resolve) => {
+            resolve([updatedRestaurant])
+          })
+        }
 
     } catch (err) {
         return err
     }
   }
 
-  async deleteOne (restaurant = {}, error = null) {
+  async deleteOne (name = null, error = null) {
     try {
       if (error) {
         throw new Error(error)
       } else {
+        const restaurants = this.restaurantDataMock.getData()
+        console.log('restaurants: ', restaurants)
+        const deletedRestaurant = restaurants.filter(restaurants => restaurants.name === name)
+        console.log('deletedRestaurant: ', deletedRestaurant)
+
         return new Promise((resolve) => {
-          resolve(restaurant)
+          resolve(deletedRestaurant)
         })
       }
 
