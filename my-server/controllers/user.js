@@ -1,4 +1,4 @@
-exports.getUsers = async function getUsers (model ) {
+exports.getUsers = async function getUsers (model = {}) {
    try {
 
     if (model.find === undefined){
@@ -41,9 +41,13 @@ exports.insertUser = async function insertUser (user = {}, model = {}, error = n
   }
 }
 
-exports.updatedUser = async function updateUser (id, payload) {
+exports.updatedUser = async function updateUser (id = null, payload = {}, model = {}, error = null) {
   try {
-    const updatedUser = await model.updateOne({_id: id}, payload)
+
+    if (model.updateOne === undefined){
+      throw new Error("O modelo passado não possui o método updateOne()")
+    }
+    const updatedUser = await model.updateOne(id, payload)
 
     if (updatedUser instanceof Error) {
       throw new Error(updatedUser)
@@ -56,9 +60,14 @@ exports.updatedUser = async function updateUser (id, payload) {
   }
 }
 
-exports.deleteUserByName = async function deleteUserByName (name) {
+exports.deleteUserByName = async function deleteUserByName (name = null, model = {}, error = null) {
   try {
-     const deletedUser = await model.deleteOne({name: name})
+
+    if (model.deleteOne === undefined){
+      throw new Error("O modelo passado não possui o método deleteOne()")
+    }
+
+    const deletedUser = await model.deleteOne({name: name})
 
      if (deletedUser instanceof Error) {
       throw new Error(deletedUser)

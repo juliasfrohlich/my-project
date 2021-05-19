@@ -37,9 +37,10 @@ class userModelMock {
     }
   }
   
-  async updateOne () {
+  async updateOne (user = {}, error = null) {
     try {
       if (error) {
+        console.log('error: ', error)
         throw new Error(error)
       } else {
         return new Promise((resolve) => {
@@ -52,7 +53,7 @@ class userModelMock {
     }
   }
 
-  async deleteOne () {
+  async deleteOne (user = {}, error = null) {
     try {
       if (error) {
         throw new Error(error)
