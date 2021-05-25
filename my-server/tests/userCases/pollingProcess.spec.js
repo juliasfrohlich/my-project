@@ -5,14 +5,16 @@ describe('Entidade: PollingProcess', () => {
   describe('Caso de uso: Criar um Processo de Votação', () => {
     
     const pollingProcessExample = {
-      voters: 'Julia, Yumi, Ryu',
       limit: '1',
-      restaurants: 'Risotinho, Camarones, Nona Pizzera',
       date: '05/05/2021',
       week: '1',
       votes: '3',
-      restaurantWinner: 'Risotinho',
-      status: 'Encerrado'
+      winner: 'Risotinho',
+      status: 'Encerrado',
+      ballot: [{
+        restaurant: '', 
+        votes:[] 
+      }]
     }
 
     test('Deve criar um pollingProcesse e retornar um status Ok e as propriedades do pollingProcesse criadas', async () => {  

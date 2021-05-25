@@ -1,10 +1,13 @@
 module.exports = {
-  Voters: {type: Array, required: true},
-  Limit: {type: Number, required: true},
-  Restaurants: {type: Array, required: true},
-  Date: {type: Date, required: false},
-  Week: {type: Number, required: false},
-  Votes: {type: Number, required: true},
-  RestaurantWinner: {type: String, required: true},
-  Status: {type: String, required: false},
-}
+  limit: {type: Number, required: true},
+  date: {type: Date, required: true},
+  week: {type: Number, required: true},
+  votes: {type: Number, required: true, default: 0},
+  winner: {type: String, required: true, default: 'ND'},
+  status: {type: String, required: false},
+  ballot: [{
+    restaurant: String,
+    votes:[SchemaTypes.Types.ObjectId] //ID dos usuários
+    }]
+  }
+

@@ -1,7 +1,7 @@
 module.exports = {
-  Name: {type: String, required: true},
-  Email: {type: String, required: true},
-  Password: {type: String, required: true},
-  Attribution: {type: String, required: true},
-  Status: {type: String, required: true}
+  name: {type: String, required: true},
+  email: {type: String, required: true},
+  password: {type: String, required: true},
+  attribution: {type: String, required: true},
+  status: {type: String, required: true}
 }
