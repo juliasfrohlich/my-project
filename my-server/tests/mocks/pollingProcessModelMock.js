@@ -10,7 +10,7 @@ class pollingProcessModelMock {
         throw new Error(error)
 
       } else if ( pollingProcess === {} ){
-          throw new Error('As informações são insuficientes para criar um usuário.')
+          throw new Error('As informações são insuficientes para criar um processo de votação.')
 
       } else {
           return new Promise(( resolve ) => {

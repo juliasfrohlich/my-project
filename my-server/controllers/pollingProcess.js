@@ -18,11 +18,28 @@ exports.getProcesses = async function getProcesses ( model = {} ) {
   }
 }
 
-exports.insertProcess = async function insertProcess ( process = {}, model = {}, error = null ) {
+function isProcessValid (process) {
+    const requiredFields = ['limit', 'data', 'week', 'votes', 'winner', 'status']
+    requiredFields.forEach(field => { 
+        const valid = !Object.keys(process).includes(field) 
+        if( valid === false ) {
+          return valid
+        } 
+    })
+
+    return true;
+}
+
+exports.createProcess = async function createProcess ( process = {}, model = {}, error = null ) {
  try {
     if ( model.create === undefined ){
       throw new Error("O modelo passado não possui o método updateOne()")
     }
+
+   if ( isProcessValid(process) === false ) {
+      throw new Error('Dados insuficientes para criação de um novo processo de votação.')
+   }
+
    const createdProcess = await model.create( process, error )
 
    return ['ok', createdProcess];
@@ -33,7 +50,7 @@ exports.insertProcess = async function insertProcess ( process = {}, model = {},
  }
 }
 
-exports.updatedProcess = async function updatedProcess ( id = '', payload = {}, model = {}, error = null ) {
+exports.updateProcess = async function updatedProcess ( id = '', payload = {}, model = {}, error = null ) {
  try {
     if ( model.updateOne === undefined ){
       throw new Error("O modelo passado não possui o método updateOne()")

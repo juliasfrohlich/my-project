@@ -1,6 +1,6 @@
 module.exports = {
-  Name: {type: String, required: true},
-  Adress: {type: String, required: true},
-  Price: {type: Number, required: false},
-  Logotype: {type: String, required: false},
+  name: {type: String, required: true},
+  adress: {type: String, required: true},
+  price: {type: Number, required: false},
+  logotype: {type: String, required: false},
 }
