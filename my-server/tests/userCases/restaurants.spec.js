@@ -5,10 +5,10 @@ describe('Entidade: Restaurant', () => {
   describe('Caso de uso: Criar um restaurante', () => {
     
     const restaurantExample = {
-      Name: 'Picadinho',
-      Adress: 'Rua teste, 39',
-      Price: '31,10',
-      Logotype: 'www.google.com',
+      name: 'Picadinho',
+      adress: 'Rua teste, 39',
+      price: '31,10',
+      logotype: 'www.google.com',
     }
 
     test('Deve criar um restaurante e retornar um status Ok e as propriedades do restaurante criadas', async () => {  

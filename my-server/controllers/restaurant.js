@@ -18,12 +18,29 @@ exports.getRestaurants = async function getRestaurants ( model = {} ) {
   }
 }
 
+function isProcessValid (restaurant) {
+  const requiredFields = ['name', 'adress']
+  let iAmValid = true
+  requiredFields.forEach(field => { 
+      const valid = Object.keys(restaurant).includes(field) 
+      if( valid === false ) {
+        iAmValid = valid
+      } 
+  })
+
+  return iAmValid;
+}
+
 exports.insertRestaurant = async function insertRestaurant ( restaurant = {}, model = {}, error = null ) {
  try {
 
     if ( model.create === undefined ){
       throw new Error("O modelo passado não possui o método updateOne()")
     }
+
+    if ( isProcessValid(restaurant) === false ) {
+      throw new Error('Dados insuficientes para a inserção de um novo restaurante.')
+   }
 
    const createdRestaurant = await model.create( restaurant, error )
 

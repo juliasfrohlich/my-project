@@ -17,16 +17,32 @@ exports.getUsers = async function getUsers ( model = {} ) {
    }
 }
 
-exports.insertUser = async function insertUser ( user = {}, model = {}, error = null ) {
+function isProcessValid (user) {
+  const requiredFields = ['name', 'email', 'password', 'attribution', 'status']
+
+  let iAmValid = true
+
+  requiredFields.forEach(field => { 
+      const valid = Object.keys(user).includes(field) 
+      if( valid === false ) {
+        iAmValid = valid
+      } 
+  })
+
+  return iAmValid;
+}
+
+exports.createUser = async function createUser ( user = {}, model = {}, error = null ) {
   try {
 
     if ( model.create === undefined ){
       throw new Error("O modelo passado não possui o método create()")
     }
 
-    if ( !Object.keys(user).length ){
-      throw new Error("Erro ao criar usuário: Dados insuficientes.")
-    }
+    if ( isProcessValid(user) === false ) {
+      throw new Error('Dados insuficientes para criação de um novo usuário.')
+   }
+
     const createdUser = await model.create( user, error )
     
     if ( createdUser instanceof Error ) {
@@ -36,7 +52,6 @@ exports.insertUser = async function insertUser ( user = {}, model = {}, error = 
     
 
   } catch (err) {
-
       return ['error', err]
   }
 }

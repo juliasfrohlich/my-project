@@ -1,36 +1,36 @@
-const {insertUser, getUsers, updatedUser, deleteUserByName} = require('../../controllers/user');
+const {createUser, getUsers, updatedUser, deleteUserByName} = require('../../controllers/user');
 const UserModelMock = require('../mocks/userModelMock')
 
 describe('Entidade: User', () => {
   describe('Caso de uso: Criar um usuário', () => {
     
     const userExample = {
-      Name: 'Julia',
-      Email: 'juliasfrohlich@hotmail.com',
-      Password: '123',
-      Attribution: 'Dev',
-      Status: 'Ativa' ,
+      name: 'Julia',
+      email: 'juliasfrohlich@hotmail.com',
+      password: '123',
+      attribution: 'Dev',
+      status: 'Ativa' ,
     }
 
     test('Deve criar um usuário e retornar um status Ok e as propriedades do usuário criadas', async () => {  
-    const response = await insertUser(userExample, UserModelMock)
+    const response = await createUser(userExample, UserModelMock)
     expect(response[0]).toBe('ok')
     expect(response[1][0].Email).toBe(userExample.Email)
   })
 
     test('Deve retornar um status "erro" e a mensagem de erro caso o model não possui o método necessário para execução', async () => { 
-      const response = await insertUser({})
+      const response = await createUser({})
       expect(response[0]).toBe('error')
       expect(response[1]).toBeInstanceOf(Error)
   })
 
     test('Deve retornar um status "erro" e a mensagem de erro caso haja erro com o banco de dados', async () => { 
-      const response = await insertUser(userExample, UserModelMock, 'Erro de Banco de dados')
+      const response = await createUser(userExample, UserModelMock, 'Erro de Banco de dados')
       expect(response[1]).toBeInstanceOf(Error)
   })
 
     test('Deve retornar um status "erro" e a mensagem de erro caso não haja dados do usuário especificado no banco de dados', async () => { 
-      const response = await insertUser({}, UserModelMock)
+      const response = await createUser({}, UserModelMock)
       expect(response[0]).toBe('error')
       expect(response[1]).toBeInstanceOf(Error)
   })
