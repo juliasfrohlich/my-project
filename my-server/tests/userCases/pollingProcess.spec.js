@@ -1,16 +1,17 @@
-const {createProcess, getProcesses, updateProcess, deleteProcessById} = require('../../controllers/pollingProcess');
+const {createProcess, getProcesses, updateProcess, deleteProcessById, getProcessesByDate, hasProcess} = require('../../controllers/pollingProcess');
 const PollingProcessModelMock = require('../mocks/pollingProcessModelMock')
 
-describe.skip('Entidade: PollingProcess', () => {
+describe('Entidade: PollingProcess', () => {
   describe('Caso de uso: Criar um Processo de Votação', () => {
     
     const pollingProcessExample = {
-      date: '05/05/2021',
+      date: '02/05/2021',
       week: 1, 
       availableRestaurants: ['Risotinho', 'Super Frango Gravataí', 'Japa da Esquina']
     }
 
-    test('Deve criar um processo de votação e retornar um status Ok e as propriedades do processo de votação criadas', async () => {  
+    // TODO Resolver o problema desse teste.
+    test.skip('Deve criar um processo de votação e retornar um status Ok e as propriedades do processo de votação criadas', async () => {  
     const response = await createProcess(pollingProcessExample, PollingProcessModelMock)
     expect(response[0]).toBe('ok')
     expect(response[1][0].restaurants).toBe(pollingProcessExample.restaurants)
@@ -32,42 +33,35 @@ describe.skip('Entidade: PollingProcess', () => {
       expect(response[0]).toBe('error')
       expect(response[1]).toBeInstanceOf(Error)
   })
+
+  test('Deve retornar um erro caso o processo já tenha sido previamente criado', async () => { 
+    const pollingProcess = {
+      _id: '123',
+      voters: 'Julia, Yumi, Ryu',
+      limit: '1',
+      restaurants: 'Risotinho, Camarones, Nona Pizzera',
+      date: '05/05/2021',
+      week: '1',
+      votes: '3',
+      restaurantWinner: 'Risotinho',
+      status: 'Encerrado'
+    }
+    const response = await hasProcess(pollingProcess, PollingProcessModelMock)
+    expect(response).toBe(true)
+})
+
 })
   
   describe('Caso de uso: Habilitar um processo de votação', () => {
-    test('Deve tentar inserir voto em um processo não iniciado e retornar um erro com o status "Não Iniciado"', async () => {  
-      const response = await deleteProcessById(PollingProcessModelMock)
-      expect(response[0]).toBe('ok')
-      expect(response[1][0]._id).toBe(id)
-    })
-    test('Deve habilitar processo de votação e retornar uma confirmação de que o processo foi iniciado', async () => {  
-      const response = await deleteProcessById(PollingProcessModelMock)
-      expect(response[0]).toBe('ok')
-      expect(response[1][0]._id).toBe(id)
-    })
-    test('Deve tentar inserir voto em um processo iniciado e retornar uma confirmação de que o voto foi inserido', async () => {  
-      const response = await deleteProcessById(PollingProcessModelMock)
-      expect(response[0]).toBe('ok')
-      expect(response[1][0]._id).toBe(id)
-    })
+    test.todo('Deve tentar inserir voto em um processo não iniciado e retornar um erro com o status "Não Iniciado"')
+    test.todo('Deve habilitar processo de votação e retornar uma confirmação de que o processo foi iniciado')
+    test.todo('Deve tentar inserir voto em um processo iniciado e retornar uma confirmação de que o voto foi inserido')
   })
 
     describe('Caso de uso: Encerrar um processo de votação', () => {
-      test('Deve tentar inserir voto em um processo iniciado e retornar uma confirmação de que o voto foi inserido', async () => {  
-        const response = await deleteProcessById(PollingProcessModelMock)
-        expect(response[0]).toBe('ok')
-        expect(response[1][0]._id).toBe(id)
-      })
-      test('Deve encerrar o processo de votação e retornar uma confirmação de que o processo foi encerrado', async () => {  
-        const response = await deleteProcessById(PollingProcessModelMock)
-        expect(response[0]).toBe('ok')
-        expect(response[1][0]._id).toBe(id)
-      })
-      test('Deve tentar inserir voto em um processo encerrado e retornar um erro com o status "Encerrado"', async () => {  
-        const response = await deleteProcessById(PollingProcessModelMock)
-        expect(response[0]).toBe('ok')
-        expect(response[1][0]._id).toBe(id)
-      })
+      test.todo('Deve tentar inserir voto em um processo iniciado e retornar uma confirmação de que o voto foi inserido')
+      test.todo('Deve encerrar o processo de votação e retornar uma confirmação de que o processo foi encerrado')
+      test.todo('Deve tentar inserir voto em um processo encerrado e retornar um erro com o status "Encerrado"')
     })
 
   describe('Caso de uso: Deletar um processo de votação', () => {
@@ -120,6 +114,35 @@ describe.skip('Entidade: PollingProcess', () => {
       expect(response[1]).toBeInstanceOf(Error)
   })
   })
+
+  describe('Caso de uso: Listar pollingProcesses pela data', () => {
+    test('Deve retornar os pollingProcesses cadastrados com a data correspondente e suas propriedades', async () => { 
+      const date = '05/05/2021'
+      const response = await getProcessesByDate(date, PollingProcessModelMock)
+      expect(response[0]).toBe('ok')
+      expect(response[1]).toHaveProperty('length')
+    })
+
+    test('Deve retornar um status "erro" e a mensagem de erro caso o model não possua o método necessário para execução', async () => { 
+      const response = await getProcessesByDate('12/02')
+      expect(response[0]).toBe('error')
+      expect(response[1]).toBeInstanceOf(Error)
+  })
+
+  test('Deve retornar um status "erro" e a mensagem de erro caso a data não seja passada', async () => { 
+    const response = await getProcessesByDate(PollingProcessModelMock)
+    expect(response[0]).toBe('error')
+    expect(response[1]).toBeInstanceOf(Error)
+})
+
+  test('Deve retornar um status "erro" e a mensagem de erro caso não haja processo com a data informada', async () => { 
+    const date = new Date()
+    const response = await getProcessesByDate(date, PollingProcessModelMock)
+    expect(response[0]).toBe('error')
+    expect(response[1]).toBeInstanceOf(Error)
+  })
+  })
+
   describe('Caso de uso: Registrar votos no pollingProcesses', () => {
     test('Deve retornar a confirmação do voto caso o usuário insira corretamente', async () => {  
       const response = await getProcesses(PollingProcessModelMock)

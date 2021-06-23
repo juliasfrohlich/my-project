@@ -13,8 +13,9 @@ class pollingProcessModelMock {
           throw new Error('As informações são insuficientes para criar um processo de votação.')
 
       } else {
+          const result = [ pollingProcess ]
           return new Promise(( resolve ) => {
-            resolve([ pollingProcess ])
+            resolve(result)
           })
       }
 
@@ -23,20 +24,54 @@ class pollingProcessModelMock {
     }
   }
 
-  async find ( error = null ) {
+  async find ( filter = null, error = null ) {
     try {
+      const data = this.pollingProcessDataMock.getData()
       if ( error ) {
         throw new Error(error)
 
+      } else if(filter !== null) {
+        const result = this.executeFilter(filter, data)
+        return new Promise(( resolve ) => {
+          resolve(result)
+        })
+
       } else {
           return new Promise(( resolve ) => {
-            resolve(this.pollingProcessDataMock.getData())
+            resolve(data)
           })
       }
       
     } catch (err) {
         return err
     }
+  }
+
+  executeFilter (filter = {}, data = []){
+    if(filter === {}) {
+      throw new Error('Não é possível realizar busca com o filtro atual.')
+    }
+
+    if (data === []) {
+      throw new Error('Não é possível realizar busca nos dados atuais.')
+    }
+
+    const filterKeys = Object.keys(filter)
+    let filteredData = []
+    let dataToFilter = data
+
+    for (let key of filterKeys) {
+      for (let item of dataToFilter ){
+        if(item[key] === filter[key]) {
+          filteredData.push(item)
+          const index = dataToFilter.indexOf(item)
+          delete dataToFilter[index]
+        }
+      }
+    }
+
+    return filteredData
+    
   }
   
   async updateOne ( id = '', dataToUpdate = {}, error = null ) {

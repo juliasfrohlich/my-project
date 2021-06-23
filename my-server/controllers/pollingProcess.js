@@ -1,4 +1,4 @@
-exports.getProcesses = async function getProcesses ( model = {} ) {
+const getProcesses = async function ( model = {} ) {
   try {
 
     if ( model.find === undefined ){
@@ -18,8 +18,7 @@ exports.getProcesses = async function getProcesses ( model = {} ) {
   }
 }
 
-// TODO Escrever teste para essa função
-async function getProcessesByDate ( date = null, model = {} ) {
+const getProcessesByDate = async function ( date = null, model = {} ) {
   try {
 
     if ( model.find === undefined ){
@@ -30,9 +29,11 @@ async function getProcessesByDate ( date = null, model = {} ) {
       throw new Error('Data inválida')
    }
     const pollingProcesses = await model.find({date})
-
     if ( pollingProcesses instanceof Error ) {
       throw new Error(pollingProcesses)
+    }
+    if ( pollingProcesses === undefined ) {
+      throw new Error('Nenhum processo foi identificado com a data indicada.')
     }
 
     return ['ok', pollingProcesses]
@@ -44,7 +45,7 @@ async function getProcessesByDate ( date = null, model = {} ) {
 
 
 function isProcessValid (process) {
-  const requiredFields = [ 'data', 'week', 'availableRestaurants']
+  const requiredFields = [ 'date', 'week', 'availableRestaurants']
 
   let iAmValid = true
 
@@ -58,7 +59,7 @@ function isProcessValid (process) {
   return iAmValid;
 }
 
-exports.createProcess = async function createProcess ( process = {}, model = {}, error = null ) {
+const createProcess = async function ( process = {}, model = {}, error = null ) {
 
 /**
  * const pollingProcessExample = {
@@ -80,13 +81,12 @@ exports.createProcess = async function createProcess ( process = {}, model = {},
       throw new Error('Dados insuficientes para criação de um novo processo de votação.')
    }
 
-  //TODO FAZER TESTE
-   if ( await checkProcess( process, model ) === true ) {
+   if ( await hasProcess( process, model ) === true ) {
      throw new Error('Processo já existe.')
    }
 
    const completeProcess = pollingProcessFactory( process )
-   const createdProcess = await model.create( completeProcess, error )
+   const createdProcess = await model.create( completeProcess )
 
    return ['ok', createdProcess];
 
@@ -96,14 +96,21 @@ exports.createProcess = async function createProcess ( process = {}, model = {},
  }
 }
 
-async function checkProcess (process, model) {
-  const processes = await getProcessesByDate(process.date)
+const hasProcess = async function (process = {}, model = {}) {
+  try{
+    const processes = await getProcessesByDate(process.date, model)
+    if(process[0] === 'error'){
+      throw new Error('Erro ao buscar processo por data')
+    }
+    if (processes[1].length > 0) {
+      return true
+    } 
   
-  if (processes.length > 0) {
-    return true
-  } 
+    return false
 
-  return false
+  } catch(err) {
+      return false
+  }
 }
 
 function pollingProcessFactory (process) {
@@ -125,7 +132,7 @@ function ballotFactory (process) {
   return pollingProcess
 }
 
-exports.updateProcess = async function updatedProcess ( id = '', payload = {}, model = {}, error = null ) {
+const updateProcess = async function ( id = '', payload = {}, model = {}, error = null ) {
  try {
     if ( model.updateOne === undefined ){
       throw new Error("O modelo passado não possui o método updateOne()")
@@ -143,7 +150,7 @@ exports.updateProcess = async function updatedProcess ( id = '', payload = {}, m
  }
 }
 
-exports.deleteProcessById = async function deleteProcessById ( id = '', model = {}, error = null ) {
+const deleteProcessById = async function ( id = '', model = {}, error = null ) {
  try {
     if ( model.deleteOne === undefined ){
       throw new Error("O modelo passado não possui o método deleteOne()")
@@ -160,4 +167,13 @@ exports.deleteProcessById = async function deleteProcessById ( id = '', model = 
   } catch (err) {
    return ['error', err]
   }
+}
+
+module.exports = {
+  getProcesses,
+  createProcess,
+  getProcessesByDate,
+  hasProcess,
+  updateProcess,
+  deleteProcessById
 }
