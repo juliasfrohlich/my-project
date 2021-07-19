@@ -1,4 +1,5 @@
-const getProcesses = async function ( model = {} ) {
+//TODO: Ajustar tipos de parâmetros
+const getProcesses = async function ( model: any = {} ) {
   try {
 
     if ( model.find === undefined ){
@@ -7,8 +8,9 @@ const getProcesses = async function ( model = {} ) {
 
     const pollingProcesses = await model.find()
 
+     //TODO Verificar se, ao apresentar um erro, o model efetivamente retorna uma instância do tipo Error
     if ( pollingProcesses instanceof Error ) {
-      throw new Error(pollingProcesses)
+      throw pollingProcesses
     }
 
     return ['ok', pollingProcesses]
@@ -17,8 +19,8 @@ const getProcesses = async function ( model = {} ) {
      return ['error', err]
   }
 }
-
-const getProcessesByDate = async function ( date = null, model = {} ) {
+//TODO: Ajustar tipos de parâmetros
+const getProcessesByDate = async function ( date:any = null, model:any = {}, error: string = null ) {
   try {
 
     if ( model.find === undefined ){
@@ -27,10 +29,13 @@ const getProcessesByDate = async function ( date = null, model = {} ) {
 
     if ( !date ) {
       throw new Error('Data inválida')
-   }
-    const pollingProcesses = await model.find({date})
+    }
+    
+    const pollingProcesses = await model.find({ date })
+
+     //TODO Verificar se, ao apresentar um erro, o model efetivamente retorna uma instância do tipo Error
     if ( pollingProcesses instanceof Error ) {
-      throw new Error(pollingProcesses)
+      throw pollingProcesses
     }
     if ( pollingProcesses === undefined ) {
       throw new Error('Nenhum processo foi identificado com a data indicada.')
@@ -43,8 +48,8 @@ const getProcessesByDate = async function ( date = null, model = {} ) {
   }
 }
 
-
-function isProcessValid (process) {
+//TODO: Ajustar tipos de parâmetros
+function isProcessValid (process:any) {
   const requiredFields = [ 'date', 'week', 'availableRestaurants']
 
   let iAmValid = true
@@ -59,7 +64,8 @@ function isProcessValid (process) {
   return iAmValid;
 }
 
-const createProcess = async function ( process = {}, model = {}, error = null ) {
+//TODO: Ajustar tipos de parâmetros
+const createProcess = async function ( process:any = {}, model:any = {}, error:string = null ) {
 
 /**
  * const pollingProcessExample = {
@@ -96,7 +102,8 @@ const createProcess = async function ( process = {}, model = {}, error = null ) 
  }
 }
 
-const hasProcess = async function (process = {}, model = {}) {
+//TODO: Ajustar tipos de parâmetros
+const hasProcess = async function (process:any = {}, model:any = {}) {
   try{
     const processes = await getProcessesByDate(process.date, model)
     if(process[0] === 'error'){
@@ -113,7 +120,8 @@ const hasProcess = async function (process = {}, model = {}) {
   }
 }
 
-function pollingProcessFactory (process) {
+//TODO: Ajustar tipos de parâmetros
+function pollingProcessFactory (process: any) {
   let pollingProcess = process;
   pollingProcess.votes = 0
   pollingProcess.status = 'Não Iniciado'
@@ -123,7 +131,8 @@ function pollingProcessFactory (process) {
   return pollingProcess
 }
 
-function ballotFactory (process) {
+//TODO: Ajustar tipos de parâmetros
+function ballotFactory (process:any) {
   let pollingProcess = process;
   pollingProcess.availableRestaurants.forEach(restaurant => {
     const newRestaraunt = {restaurant: restaurant, votes: []}
@@ -132,15 +141,18 @@ function ballotFactory (process) {
   return pollingProcess
 }
 
-const updateProcess = async function ( id = '', payload = {}, model = {}, error = null ) {
+//TODO: Ajustar tipos de parâmetros
+const updateProcess = async function ( id: any = '', payload: any = {}, model: any = {}, error: string = null ) {
  try {
     if ( model.updateOne === undefined ){
       throw new Error("O modelo passado não possui o método updateOne()")
     }
+
+  //TODO Verificar se, ao apresentar um erro, o model efetivamente retorna uma instância do tipo Error
    const updatedProcess = await model.updateOne( id, payload )
 
    if ( updatedProcess instanceof Error ) {
-    throw new Error(updatedProcess)
+    throw updatedProcess
   }
 
    return ['ok', updatedProcess];
@@ -150,7 +162,8 @@ const updateProcess = async function ( id = '', payload = {}, model = {}, error 
  }
 }
 
-const deleteProcessById = async function ( id = '', model = {}, error = null ) {
+//TODO: Ajustar tipos de parâmetros
+const deleteProcessById = async function ( id: any = '', model: any = {}, error: string = null ) {
  try {
     if ( model.deleteOne === undefined ){
       throw new Error("O modelo passado não possui o método deleteOne()")
@@ -158,8 +171,9 @@ const deleteProcessById = async function ( id = '', model = {}, error = null ) {
 
     const deletedProcess = await model.deleteOne( id )
 
+    //TODO Verificar se, ao apresentar um erro, o model efetivamente retorna uma instância do tipo Error
     if ( deletedProcess instanceof Error ) {
-      throw new Error(deletedProcess)
+      throw deletedProcess
     }
 
     return ['ok', deletedProcess];
@@ -169,7 +183,7 @@ const deleteProcessById = async function ( id = '', model = {}, error = null ) {
   }
 }
 
-module.exports = {
+export {
   getProcesses,
   createProcess,
   getProcessesByDate,

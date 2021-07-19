@@ -1,8 +1,7 @@
-const express = require('express');
-const routers = require('../routers/index');
-const mongoose = require('mongoose');
-const root = require('../routers/root');
-const bodyParser = require('body-parser');
+import express from 'express';
+import mongoose from 'mongoose';
+import router from '../routers/index';
+import bodyParser from 'body-parser';
 
 mongoose.connect('mongodb://127.0.0.1:27017/Dogs', {useNewUrlParser: true, useUnifiedTopology: true});
 
@@ -25,6 +24,5 @@ app.use(function (req, res, next) {
   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,PATCH,OPTIONS');
   next();
 });
-app.use('/', root); 
 
-module.exports = app
+export default app

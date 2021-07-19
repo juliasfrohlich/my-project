@@ -1,13 +1,12 @@
-const {Router} = require('express');
-const julia = require('../controllers');
+import { Router } from 'express';
 
 const router = Router()
 
 // Router.método('/rota a ser executada', [middleware], (req, res) => {const a = Controller.function(req)} )
 router.get('/', (req, res) => {
-    const response = julia()
+    const response = 'oi'
     res.json({response})
 })
     
 
-module.exports = router
+export default {router}

@@ -4,4 +4,4 @@ function julia () {
 }
 
 
-module.exports = julia
+export = julia

@@ -1,4 +1,5 @@
-exports.getRestaurants = async function getRestaurants ( model = {} ) {
+//TODO: Ajustar tipos de parâmetros
+const getRestaurants = async function getRestaurants(model: any = {}, error: string = null) {
   try {
 
     if ( model.find === undefined ){
@@ -7,8 +8,9 @@ exports.getRestaurants = async function getRestaurants ( model = {} ) {
 
     const restaurants = await model.find()
 
+     //TODO Verificar se, ao apresentar um erro, o model efetivamente retorna uma instância do tipo Error
     if ( restaurants instanceof Error ) {
-      throw new Error(restaurants)
+      throw restaurants
     }
 
     return ['ok', restaurants]
@@ -18,7 +20,8 @@ exports.getRestaurants = async function getRestaurants ( model = {} ) {
   }
 }
 
-function isProcessValid (restaurant) {
+//TODO: Ajustar tipos de parâmetros
+function isProcessValid (restaurant: any) {
   const requiredFields = ['name', 'adress']
   let iAmValid = true
   requiredFields.forEach(field => { 
@@ -31,7 +34,8 @@ function isProcessValid (restaurant) {
   return iAmValid;
 }
 
-exports.insertRestaurant = async function insertRestaurant ( restaurant = {}, model = {}, error = null ) {
+//TODO: Ajustar tipos de parâmetros
+const insertRestaurant = async function insertRestaurant ( restaurant: any = {}, model: any = {}, error: string = null ) {
  try {
 
     if ( model.create === undefined ){
@@ -52,15 +56,17 @@ exports.insertRestaurant = async function insertRestaurant ( restaurant = {}, mo
  }
 }
 
-exports.updatedRestaurant = async function updateRestaurant ( id = '', payload = {}, model = {}, error = null ) {
+//TODO: Ajustar tipos de parâmetros
+const updatedRestaurant = async function updateRestaurant ( id: any = '', payload: any = {}, model: any = {}, error: string = null ) {
  try {
     if ( model.updateOne === undefined ){
       throw new Error("O modelo passado não possui o método updateOne()")
     }
    const updatedRestaurant = await model.updateOne( id, payload )
 
+    //TODO Verificar se, ao apresentar um erro, o model efetivamente retorna uma instância do tipo Error
    if ( updatedRestaurant instanceof Error ) {
-    throw new Error(updatedRestaurant)
+    throw updatedRestaurant
   }
 
    return ['ok', updatedRestaurant];
@@ -70,7 +76,8 @@ exports.updatedRestaurant = async function updateRestaurant ( id = '', payload =
  }
 }
 
-exports.deleteRestaurantByName = async function deleteRestaurantByName ( name = null, model = {}, error = null ) {
+//TODO: Ajustar tipos de parâmetros
+const deleteRestaurantByName = async function deleteRestaurantByName ( name: any = null, model: any = {}, error: string = null ) {
  try {
 
     if ( model.deleteOne === undefined ){
@@ -79,8 +86,9 @@ exports.deleteRestaurantByName = async function deleteRestaurantByName ( name = 
 
     const deletedRestaurant = await model.deleteOne( name )
 
+    //TODO Verificar se, ao apresentar um erro, o model efetivamente retorna uma instância do tipo Error
     if ( deletedRestaurant instanceof Error ) {
-      throw new Error( deletedRestaurant )
+      throw deletedRestaurant
     }
 
     return ['ok', deletedRestaurant];
@@ -88,4 +96,11 @@ exports.deleteRestaurantByName = async function deleteRestaurantByName ( name = 
   } catch (err) {
    return ['error', err]
   }
+}
+
+export {
+  getRestaurants,
+  insertRestaurant,
+  updatedRestaurant,
+  deleteRestaurantByName
 }

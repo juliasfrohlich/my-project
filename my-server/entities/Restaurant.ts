@@ -1,4 +1,4 @@
-module.exports = {
+export = {
   name: {type: String, required: true},
   adress: {type: String, required: true},
   price: {type: Number, required: false},

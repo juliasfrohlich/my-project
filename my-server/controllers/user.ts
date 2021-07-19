@@ -1,4 +1,13 @@
-exports.getUsers = async function getUsers ( model = {} ) {
+interface User {
+  name?: string
+  email?: string
+  password?: string
+  attribution?: string
+  status?: string
+}
+
+//TODO: Ajustar tipos de parâmetros
+const getUsers = async function getUsers ( model:any = {}, error: string = null ) {
    try {
 
     if ( model.find === undefined ){
@@ -7,7 +16,7 @@ exports.getUsers = async function getUsers ( model = {} ) {
      const users = await model.find()
 
      if ( users instanceof Error)  {
-      throw new Error(users)
+      throw users
     }
 
      return ['ok', users]
@@ -17,7 +26,7 @@ exports.getUsers = async function getUsers ( model = {} ) {
    }
 }
 
-function isProcessValid (user) {
+function isProcessValid (user: User) {
   const requiredFields = ['name', 'email', 'password', 'attribution', 'status']
 
   let iAmValid = true
@@ -32,7 +41,8 @@ function isProcessValid (user) {
   return iAmValid;
 }
 
-exports.createUser = async function createUser ( user = {}, model = {}, error = null ) {
+//TODO: Ajustar tipos de parâmetros
+const createUser = async function createUser ( user: User = {}, model: any = {}, error: string = null ) {
   try {
 
     if ( model.create === undefined ){
@@ -46,7 +56,7 @@ exports.createUser = async function createUser ( user = {}, model = {}, error = 
     const createdUser = await model.create( user, error )
     
     if ( createdUser instanceof Error ) {
-      throw new Error(createdUser)
+      throw createdUser
     }
     return ['ok', createdUser];
     
@@ -56,7 +66,8 @@ exports.createUser = async function createUser ( user = {}, model = {}, error = 
   }
 }
 
-exports.updatedUser = async function updateUser ( id = '', payload = {}, model = {}, error = null ) {
+//TODO: Ajustar tipos de parâmetros
+const updatedUser = async function updateUser ( id: string = '', payload: any = {}, model:any = {}, error: string = null ) {
   try {
 
     if ( model.updateOne === undefined ){
@@ -65,7 +76,7 @@ exports.updatedUser = async function updateUser ( id = '', payload = {}, model =
     const updatedUser = await model.updateOne( id, payload )
 
     if ( updatedUser instanceof Error ) {
-      throw new Error(updatedUser)
+      throw updatedUser
     }
 
     return ['ok', updatedUser];
@@ -75,7 +86,8 @@ exports.updatedUser = async function updateUser ( id = '', payload = {}, model =
   }
 }
 
-exports.deleteUserByName = async function deleteUserByName ( name = null, model = {}, error = null ) {
+//TODO: Ajustar tipos de parâmetros
+const deleteUserByName = async function deleteUserByName ( name: string = null, model:any = {}, error: string = null ) {
   try {
 
     if ( model.deleteOne === undefined ){
@@ -85,7 +97,7 @@ exports.deleteUserByName = async function deleteUserByName ( name = null, model 
     const deletedUser = await model.deleteOne( name )
 
      if ( deletedUser instanceof Error ) {
-      throw new Error(deletedUser)
+      throw deletedUser
     }
 
      return ['ok', deletedUser];
@@ -93,4 +105,12 @@ exports.deleteUserByName = async function deleteUserByName ( name = null, model 
    } catch (err) {
     return ['error', err]
    }
+ }
+
+
+ export {
+  getUsers,
+  createUser,
+  updatedUser,
+  deleteUserByName
  }
