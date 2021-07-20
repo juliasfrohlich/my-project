@@ -1,4 +1,9 @@
-const {insertRestaurant, getRestaurants, updatedRestaurant, deleteRestaurantByName} = require('../../controllers/restaurant');
+import {
+  insertRestaurant, 
+  getRestaurants, 
+  updatedRestaurant, 
+  deleteRestaurantByName
+} from '../../controllers/restaurant';
 const RestaurantModelMock = require('../mocks/restaurantModelMock')
 
 describe('Entidade: Restaurant', () => {

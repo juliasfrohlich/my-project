@@ -1,4 +1,11 @@
-const {createProcess, getProcesses, updateProcess, deleteProcessById, getProcessesByDate, hasProcess} = require('../../controllers/pollingProcess');
+import {
+  createProcess, 
+  getProcesses, 
+  updateProcess, 
+  deleteProcessById, 
+  getProcessesByDate, 
+  hasProcess
+} from '../../controllers/pollingProcess';
 const PollingProcessModelMock = require('../mocks/pollingProcessModelMock')
 
 describe('Entidade: PollingProcess', () => {

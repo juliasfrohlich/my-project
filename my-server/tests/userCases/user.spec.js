@@ -1,4 +1,9 @@
-const {createUser, getUsers, updatedUser, deleteUserByName} = require('../../controllers/user');
+import {
+  createUser, 
+  getUsers, 
+  updatedUser, 
+  deleteUserByName
+} from'../../controllers/user';
 const UserModelMock = require('../mocks/userModelMock')
 
 describe('Entidade: User', () => {
