@@ -4,7 +4,7 @@ import {
   updatedUser, 
   deleteUserByName
 } from'../../controllers/user';
-const UserModelMock = require('../mocks/userModelMock')
+import UserModelMock from '../mocks/userModelMock'
 
 describe('Entidade: User', () => {
   describe('Caso de uso: Criar um usuário', () => {
